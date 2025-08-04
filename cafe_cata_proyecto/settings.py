@@ -26,10 +26,10 @@ SECRET_KEY = "django-insecure-8wtd1q-+ljll=j$i1%%nik=s&3+hh*eg$^_^z99t=8oqawxvai
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*','.up.railway.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.up.railway.app']
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://cata-cafe-prod.up.railway.app/'
+    'https://cata-cafe-prod.up.railway.app'
 ]
 
 # Application definition
