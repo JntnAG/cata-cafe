@@ -119,40 +119,38 @@
             padding: 5px 10px;
             margin-bottom: 5px;
         }
-         .vertical-slider {
+        .vertical-slider {
         writing-mode: bt-lr; /* IE */
         /* -webkit-appearance: slider-vertical; Chrome/Safari */
         width: 100px;
         height: 100px;
         transform: rotate(270deg);
+        } 
+        .range-wrapper {
+        background: #fff8f2;
+        border: 1px solid #e0d5ca;
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
-        
-    .range-wrapper {
-    background: #fff8f2;
-    border: 1px solid #e0d5ca;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
 
-    .range-wrapper label {
-      font-weight: 600;
-      color: #4b3621;
-      margin-bottom: 8px;
-      display: block;
-    }
+        .range-wrapper label {
+        font-weight: 600;
+        color: #4b3621;
+        margin-bottom: 8px;
+        display: block;
+        }
 
-    input[type="range"] {
-      width: 25%;
-      accent-color: #6f4e37; /* color café */
-    }
-
-    .range-value {
-      font-weight: bold;
-      color: #6f4e37;
-      text-align: right;
-    }
+        input[type="range"] {
+        width: 25%;
+        accent-color: #6f4e37; /* color café */
+        }
+        .range-value {
+        font-weight: bold;
+        color: #6f4e37;
+        text-align: right;
+        }
         .quality-scale {
             background-color: #f3e5ab;
             border: 1px solid #ddd;
@@ -186,51 +184,41 @@
         .quality-table td {
             padding: 4px;
         }
-        @media (max-width: 768px) {
-            .form-container {
-                padding: 15px;
-            }
-            .logo-cafe {
-                width: 50px;
-                height: 50px;
-            }
-            .display-5 {
-                font-size: 1.8rem;
-            }
-            .lead {
-                font-size: 1rem;
-            }
-            .section-title {
-                font-size: 1rem;
-            }
-            .btn {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-            .text-end {
-                text-align: center !important;
-            }
-            .footer div {
-                font-size: 0.8rem;
-            }
+
+        .number-spinner {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        }
+
+        .number-spinner input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+            text-align: center;
+        }
+        .btn-outline-secondary {
+        background-color: #e9e9ed;
+        color: #4b3621;
+        border: 1px solid #ccc;
+        padding: 0.25rem 0.6rem;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        transition: background-color 0.2s ease;
+        width: 10%;
+        }
+        .btn-outline-secondary:hover {
+        background-color: #d6d6dc;
         }
         @media (max-width: 576px) {
-            .form-container {
-                margin-top: 15px;
-                padding: 10px;
-            }
-            .logo-cafe {
-                width: 40px;
-                height: 40px;
-            }
-            .display-5 {
-                font-size: 1.5rem;
-            }
-            .quality-table th, .quality-table td {
-                padding: 3px;
-                font-size: 0.8rem;
-            }
+        .section-title {
+            font-size: 1rem;
         }
+        }
+
+      
     </style>
 </head>
 
@@ -242,194 +230,260 @@
         <p class="lead mb-3 mb-md-5">Modifica los datos de la evaluación sensorial</p>
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-lg-10 col-md-12">
-            <div class="form-container">
-                <form method="post">
-                    {% csrf_token %}
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <div class="form-container">
+            <form method="post">
+              {% csrf_token %}
 
-                    <!-- Información básica -->
-                    <div class="section-title">Información del Catador y Café</div>
-                    <div class="row">
-                        <div class="col-md-4 form-group">
-                            <label class="form-label">{{ form.nombre.label }}</label>
-                            {{ form.nombre }} 
-                            {% if form.nombre.errors %}
-                                <div class="form-error">{{ form.nombre.errors }}</div>
-                            {% endif %}
+              <!-- Información básica -->
+              <div class="section-title">Información del Catador y Café</div>
+              <div class="row">
+                <div class="col-md-4 form-group">
+                  <label class="form-label" >{{ form.nombre.label }}</label>
+                  {{ form.nombre }} 
+                  {% if form.nombre.errors %}
+                    <div class="form-error">{{ form.nombre.errors }}</div>
+                  {% endif %}
+                </div>
+                <div class="col-md-4 form-group">
+                  <label class="form-label">{{ form.identificacion.label }}</label>
+                  {{ form.identificacion }}
+                  {% if form.identificacion.errors %}
+                    <div class="form-error">{{ form.identificacion.errors }}</div>
+                  {% endif %}
+                </div>
+                <div class="col-md-4 form-group">
+                  <label class="form-label">{{ form.matricula_cafe.label }}</label>
+                  {{ form.matricula_cafe }}
+                  {% if form.matricula_cafe.errors %}
+                    <div class="form-error">{{ form.matricula_cafe.errors }}</div>
+                  {% endif %}
+                </div>
+              </div>
+
+
+              <!-- Contenedor centrado -->
+              <div style="text-align: center;">
+                <!-- Cuadro de información -->
+                <div style="display: inline-block; background-color: #f3e5ab; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 13px;">
+                  <h4 style="margin-top: 0; margin-bottom: 10px; color: #333; font-size: 14px;">Información: Escala de Calidad</h4>
+                  <table cellpadding="5" cellspacing="0" style="border-collapse: collapse; text-align: center;">
+                    <thead style="background-color: #d5c68c; color: #444;">
+                      <tr>
+                        <th style="border-bottom: 1px solid #ccc;">Bueno</th>
+                        <th style="border-bottom: 1px solid #ccc;">Muy Bueno</th>
+                        <th style="border-bottom: 1px solid #ccc;">Excelente</th>
+                        <th style="border-bottom: 1px solid #ccc;">Sobresaliente</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="padding: 4px;">6.00<br>6.25<br>6.50<br>6.75</td>
+                        <td style="padding: 4px;">7.00<br>7.25<br>7.50<br>7.75</td>
+                        <td style="padding: 4px;">8.00<br>8.25<br>8.50<br>8.75</td>
+                        <td style="padding: 4px;">9.00<br>9.25<br>9.50<br>9.75</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+
+
+              <!-- Tueste -->
+              <div class="form-group">
+                <label class="form-label">Tueste del Café</label>
+                    <div class="d-flex flex-wrap gap-3">
+                    {% for choice in form.tueste %}
+                    {% if choice.choice_label == "Claro" %}
+                        <div class="form-check tueste-claro">
+                    {% elif choice.choice_label == "Medio" %}
+                        <div class="form-check tueste-medio">
+                    {% elif choice.choice_label == "Medio Oscuro" %}
+                        <div class="form-check tueste-medio-oscuro">
+                    {% elif choice.choice_label == "Oscuro" %}
+                        <div class="form-check tueste-oscuro">
+                    {% else %}
+                        <div class="form-check">
+                    {% endif %}
+                        {{ choice.tag }}
+                        <label class="form-check-label" for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
                         </div>
-                        <div class="col-md-4 form-group">
-                            <label class="form-label">{{ form.identificacion.label }}</label>
-                            {{ form.identificacion }}
-                            {% if form.identificacion.errors %}
-                                <div class="form-error">{{ form.identificacion.errors }}</div>
-                            {% endif %}
-                        </div>
-                        <div class="col-md-4 form-group">
-                            <label class="form-label">{{ form.matricula_cafe.label }}</label>
-                            {{ form.matricula_cafe }}
-                            {% if form.matricula_cafe.errors %}
-                                <div class="form-error">{{ form.matricula_cafe.errors }}</div>
-                            {% endif %}
-                        </div>
+                    {% endfor %}
+                    </div>
+             </div>
+
+
+
+
+
+              <!-- Atributos sensoriales -->
+              <div class="section-title">Atributos Sensoriales</div>
+              <div class="row">
+                  <div class="number-spinner col-md-6 form-group">
+                    <label class="form-label">Fragancia/Aroma</label>
+                    <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_fraganciaAroma')">–</button>
+                    {{ form.fraganciaAroma }}
+                    <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_fraganciaAroma')">+</button>
+                  </div>
+
+                    <div class="col-md-3 form-group">
+                        <label class="form-label">{{ form.intensidad_fragancia.label }} (Seco)</label><br>
+                        {{ form.intensidad_fragancia }}
+                    </div>
+                    <div class="col-md-3 form-group">
+                          <label class="form-label">{{ form.intensidad_aroma.label }} (Espuma)</label><br>
+                          {{ form.intensidad_aroma }}
                     </div>
 
-                    <!-- Escala de calidad -->
-                    <div class="quality-scale">
-                        <h4>Información: Escala de Calidad</h4>
-                        <table class="quality-table">
-                            <thead>
-                                <tr>
-                                    <th>Bueno</th>
-                                    <th>Muy Bueno</th>
-                                    <th>Excelente</th>
-                                    <th>Sobresaliente</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>6.00<br>6.25<br>6.50<br>6.75</td>
-                                    <td>7.00<br>7.25<br>7.50<br>7.75</td>
-                                    <td>8.00<br>8.25<br>8.50<br>8.75</td>
-                                    <td>9.00<br>9.25<br>9.50<br>9.75</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                  <div class="number-spinner col-md-6 form-group">
+                    <label class="form-label">{{ form.sabor.label }}</label>
+                    <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_sabor')">–</button>
+                    {{ form.sabor }}
+                    <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_sabor')">+</button>
+                  </div>
 
-                    <!-- Tueste -->
-                    <div class="form-group">
-                        <label class="form-label">Tueste del Café</label>
-                        <div class="d-flex flex-wrap gap-2">
-                            {% for choice in form.tueste %}
-                                {% if choice.choice_label == "Claro" %}
-                                    <div class="form-check tueste-claro">
-                                {% elif choice.choice_label == "Medio" %}
-                                    <div class="form-check tueste-medio">
-                                {% elif choice.choice_label == "Medio Oscuro" %}
-                                    <div class="form-check tueste-medio-oscuro">
-                                {% elif choice.choice_label == "Oscuro" %}
-                                    <div class="form-check tueste-oscuro">
-                                {% else %}
-                                    <div class="form-check">
-                                {% endif %}
-                                    {{ choice.tag }}
-                                    <label class="form-check-label" for="{{ choice.id_for_label }}">{{ choice.choice_label }}</label>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
+                  <div class="number-spinner col-md-6 form-group">
+                    <label class="form-label">{{ form.residual.label }}</label>
+                    <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_residual')">–</button>
+                    {{ form.residual }}
+                    <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_residual')">+</button>
+                  </div>
 
-                    <!-- Atributos sensoriales -->
-                    <div class="section-title">Atributos Sensoriales</div>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label class="form-label">Fragancia/Aroma</label>
-                            {{ form.fraganciaAroma }}
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label class="form-label">{{ form.intensidad_fragancia.label }} (Seco)</label>
-                            {{ form.intensidad_fragancia }}
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label class="form-label">{{ form.intensidad_aroma.label }} (Espuma)</label>
-                            {{ form.intensidad_aroma }}
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="form-label">{{ form.sabor.label }}</label>
-                            {{ form.sabor }}
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="form-label">{{ form.residual.label }}</label>
-                            {{ form.residual }}
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="form-label">{{ form.acidez.label }}</label>
-                            {{ form.acidez }}
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label class="form-label">{{ form.intensidad_acidez.label }} (Alta/Baja)</label>
-                            {{ form.intensidad_acidez }}
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="form-label">{{ form.cuerpo.label }}</label>
-                            {{ form.cuerpo }}
-                        </div>
-                        <div class="col-md-3 form-group">
-                            <label class="form-label">{{ form.intensidad_cuerpo.label }} (Pesado/Delgado)</label>
-                            {{ form.intensidad_cuerpo }}
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="form-label">{{ form.balance.label }}</label>
-                            {{ form.balance }}
-                        </div>
-                    </div>
+                  <div class="number-spinner col-md-6 form-group">
+                    <label class="form-label">{{ form.acidez.label }}</label>
+                    <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_acidez')">–</button>
+                    {{ form.acidez }}
+                    <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_acidez')">+</button>
+                  </div>
 
-                    <!-- Tazas y defectos -->
-                    <div class="section-title">Tazas y Defectos</div>
-                    <div class="row">
-                        <div class="col-md-4 form-group">
-                            <label class="form-label">{{ form.tazas.label }}</label>
-                            {{ form.tazas }}
-                            <small class="text-muted d-block">Cantidad tazas</small>
-                        </div>
-                        <div class="col-md-4 form-group">
-                            <label class="form-label">{{ form.defectos_ligero.label }}</label>
-                            {{ form.defectos_ligero }}
-                            <small class="text-muted d-block">Resta 2 puntos c/u</small>
-                        </div>
-                        <div class="col-md-4 form-group">
-                            <label class="form-label">{{ form.defectos_rechazo.label }}</label>
-                            {{ form.defectos_rechazo }}
-                            <small class="text-muted d-block">Resta 4 puntos c/u</small>
-                        </div>
-                    </div>
 
-                    <!-- Puntaje -->
-                    <div class="form-group">
-                        <label class="form-label">{{ form.puntaje_catador.label }}</label>
-                        {{ form.puntaje_catador }}
-                    </div>
+                      <div class="col-md-3 form-group">
+                        <label class="form-label">{{ form.intensidad_acidez.label }} (Alta/Baja)</label><br>
+                        {{ form.intensidad_acidez }}
+                      </div>
 
-                    <!-- Checkboxes -->
-                    <div class="section-title">Atributos (cada uno resta x2)</div>
-                    <div class="row">
-                        <div class="col-md-4 form-group">
-                            <label class="form-label">{{ form.uniformidad.label }}</label>
-                            {{ form.uniformidad }}
-                            <small class="text-muted d-block">Cantidad tazas diferentes</small>
-                        </div>
-                        <div class="col-md-4 form-group">
-                            <label class="form-label">{{ form.taza_limpia.label }}</label>
-                            {{ form.taza_limpia }}
-                            <small class="text-muted d-block">Cantidad tazas con defectos</small>
-                        </div>
-                        <div class="col-md-4 form-group">
-                            <label class="form-label">{{ form.dulzura.label }}</label>
-                            {{ form.dulzura }}
-                            <small class="text-muted d-block">Cantidad tazas con diferente dulzor</small>
-                        </div>
-                    </div>
 
-                    <!-- Observaciones -->
-                    <div class="section-title">Observaciones</div>
-                    <div class="form-group">
-                        {{ form.observaciones }}
-                    </div>
+                <div class="number-spinner col-md-6 form-group">
+                  <label class="form-label">{{ form.cuerpo.label }}</label>
+                  <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_cuerpo')">–</button>
+                  {{ form.cuerpo }}
+                  <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_cuerpo')">+</button>
+                </div>
+                      <div class="col-md-3 form-group">
+                        <label class="form-label">{{ form.intensidad_cuerpo.label }} (Pesado/Delgado)</label><br>
+                        {{ form.intensidad_cuerpo }}
+                      </div>
 
-                    <!-- Botones -->
-                    <div class="text-end mt-4">
-                        <button type="submit" class="btn btn-cafe">
-                            <i class="fas fa-save me-1"></i> Guardar Cata
-                        </button>
-                        <a href="{% url 'home' %}" class="btn btn-verde">
-                            <i class="fas fa-home me-1"></i> Inicio
-                        </a>
-                    </div>
-                </form>
-            </div>
+                
+                <div class="number-spinner col-md-6 form-group">
+                  <label class="form-label">{{ form.balance.label }}</label>
+                  <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_balance')">–</button>
+                  {{ form.balance }}
+                  <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_balance')">+</button>
+                </div>
+              </div>
+
+
+
+              <!-- Tazas y defectos -->
+              <div class="section-title">Tazas y Defectos</div>
+              <div class="row">
+                <div class="number-spinner">
+                  <label class="form-label">{{ form.tazas.label }}</label>
+                  <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_tazas')"> – </button>
+                  {{ form.tazas }}
+                  <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_tazas')"> + </button>
+                  <small class="text-muted">Cantidad tazas</small>
+                </div>
+
+              <div class="number-spinner">
+                <label class="form-label">{{ form.defectos_ligero.label }}</label>
+                <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_defectos_ligero')"> – </button>
+                {{ form.defectos_ligero }}
+                <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_defectos_ligero')"> + </button>
+                <small class="text-muted">Resta 2 puntos c/u</small>
+              </div>
+
+              <div class="number-spinner">
+                <label class="form-label">{{ form.defectos_rechazo.label }}</label>
+                <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_defectos_rechazo')"> – </button>
+                {{ form.defectos_rechazo }}
+                <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_defectos_rechazo')"> + </button>
+                <small class="text-muted">Resta 4 puntos c/u</small>
+              </div>
+
+
+              <!-- Puntaje -->
+              <div class="number-spinner form-group">
+                <label class="form-label">{{ form.puntaje_catador.label }}</label>
+                <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_puntaje_catador')">–</button>
+                {{ form.puntaje_catador }}
+                <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_puntaje_catador')">+</button>
+              </div>
+
+
+              <!-- Checkboxes -->
+              <div class="section-title">Atributos (cada uno resta x2)</div>
+              <div class="row">
+                <div class="col-md-4 form-group number-spinner">
+                  <label class="form-label">{{ form.uniformidad.label }}</label>
+                  <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_uniformidad')">–</button>
+                  {{ form.uniformidad }}
+                  <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_uniformidad')">+</button>
+                  <small class="text-muted">Cantidad de tazas no uniformes</small>
+                </div>
+
+                <div class="col-md-4 form-group number-spinner">
+                  <label class="form-label">{{ form.taza_limpia.label }}</label>
+                  <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_taza_limpia')">–</button>
+                  {{ form.taza_limpia }}
+                  <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_taza_limpia')">+</button>
+                  <small class="text-muted">Cantidad de tazas con defectos</small>
+                </div>
+
+                <div class="col-md-4 form-group number-spinner">
+                  <label class="form-label">{{ form.dulzura.label }}</label>
+                  <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_dulzura')">–</button>
+                  {{ form.dulzura }}
+                  <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_dulzura')">+</button>
+                  <small class="text-muted">Cantidad de tazas con diferente dulzor</small>
+                </div>
+
+              </div>
+
+
+              <!-- Observaciones -->
+              <div class="section-title">Observaciones</div>
+              <div class="form-group">
+                {{ form.observaciones }}
+              </div>
+
+              <script>
+              function stepDownField(id) {
+                const input = document.getElementById(id);
+                if (input && input.stepDown) input.stepDown();
+              }
+              function stepUpField(id) {
+                const input = document.getElementById(id);
+                if (input && input.stepUp) input.stepUp();
+              }
+              </script>
+
+              <!-- Botones -->
+              <div class="text-end mt-4">
+                <button type="submit" class="btn btn-cafe">
+                  <i class="fas fa-save me-1"></i> Guardar Cata
+                </button>
+                <a href="{% url 'home' %}" class="btn btn-verde">
+                  <i class="fas fa-home me-1"></i> Inicio
+                </a>
+              </div>
+            </form>
+          </div>
         </div>
-    </div>
+      </div>
 </div>
 
 <footer class="footer mt-auto">
