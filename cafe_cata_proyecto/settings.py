@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +25,12 @@ SECRET_KEY = "django-insecure-8wtd1q-+ljll=j$i1%%nik=s&3+hh*eg$^_^z99t=8oqawxvai
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-# DEBUG = False  # Para producción, en desarrollo déjalo como True
-ALLOWED_HOSTS = ['*']  # O especifica tus dominios permitidos
 
+ALLOWED_HOSTS = ['*','.up.railway.app', 'localhost', '127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://cata-cafe-prod.up.railway.app/'
+]
 
 # Application definition
 
@@ -74,27 +77,6 @@ WSGI_APPLICATION = "cafe_cata_proyecto.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-'''
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }  
-}
-
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'TMigNDRniOiWZiFCEtkSSvjxgMKozzKh',
-        'HOST': 'postgres.railway.internal',
-        'PORT': '5432',
-    }
-}
-'''
-
 import dj_database_url
 
 DATABASES = {
@@ -103,13 +85,8 @@ DATABASES = {
         conn_max_age=600
     )
 }
-#https://railway.com/project/87dbba48-cb49-4bd4-b6bf-b1f96674b423/service/13f1bdd5-20c6-449e-8b76-b7c9f6391170/variables?environmentId=5716033b-c278-4ff1-b48d-b376fdd32292
 
 
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
