@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>☕ Mis Catas Registradas</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-image: url('https://images.unsplash.com/photo-1560354297-55157b7ef809?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+        }
+
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.92);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .main-content {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            padding: 20px;
+            background-color: #ffffffd9;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background-color: #6f4e37;
+            border-color: #6f4e37;
+        }
+
+        .btn-secondary {
+            background-color: #4e8b5a;
+            border-color: #4e8b5a;
+        }
+
+        h2, h5 {
+            color: #4b3621;
+        }
+
+        .logo-cafe {
+            width: 70px;
+            margin: 10px;
+        }
+
+        footer {
+            background-color: #6f4e37;
+            color: white;
+            padding: 20px 10px;
+            text-align: center;
+        }
+
+        .footer-icons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .footer-icons a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-icons a:hover {
+            color: #d8bfa2;
+        }
+
+        .alert-cafe {
+            background-color: rgb(245, 233, 233);
+            border: 2px solid #6f4e37;
+            color: #4b3621;
+            border-radius: 8px;
+            padding: 15px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 576px) {
+            .input-group {
+                flex-direction: column;
+            }
+
+            .input-group input,
+            .input-group button {
+                width: 100% !important;
+                margin-bottom: 10px;
+            }
+
+            .d-flex.justify-content-between {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="overlay">
+    <div class="container main-content">
+        <div class="card mx-auto" style="max-width: 800px;">
+            <div class="card-header bg-transparent border-0 text-center">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTK3235gksLGgdPTsaDmqihYfITJlbbDFvnVg&s" 
+                     class="logo-cafe mb-3" 
+                     alt="Logo Café">
+                <h2 class="mb-0">Mis Catas Registradas</h2>
+            </div>
+
+            <div class="card-body">
+                <form method="post" class="mb-4">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" 
+                               name="identificacion" 
+                               class="form-control" 
+                               placeholder="Ingresa tu número de identificación" 
+                               required
+                               value="{{ identificacion|default:'' }}">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search me-1"></i> Buscar
+                        </button>
+                    </div>
+                </form>
+
+                <div class="d-flex justify-content-between mb-3">
+                    <a href="{% url 'home' %}" class="btn btn-secondary btn-sm">
+                        <i class="fas fa-home me-1"></i> Inicio
+                    </a>
+
+                </div>
+
+                {% if mostrar_resultados %}
+                    {% if catas %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th><i class="fas fa-calendar-alt me-1"></i> Fecha</th>
+                                        <th><i class="fas fa-barcode me-1"></i> Matrícula</th>
+                                        <th><i class="fas fa-star me-1"></i> Puntuación</th>
+                                        <th><i class="fas fa-cog me-1"></i> Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cata in catas %}
+                                    <tr>
+                                        <td>{{ cata.fecha|date:"d/m/Y H:i" }}</td>
+                                        <td>{{ cata.matricula_cafe }}</td>
+                                        <td>
+                                            <span class="badge bg-brown" style="background-color: #6f4e37;">
+                                                {{ cata.puntuacion_total }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <a href="{% url 'detalle_cata' cata.id %}" 
+                                                   class="btn btn-info" 
+                                                   title="Ver detalle"
+                                                   data-bs-toggle="tooltip">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="{% url 'editar_cata' cata.id %}" 
+                                                   class="btn btn-warning" 
+                                                   title="Editar"
+                                                   data-bs-toggle="tooltip">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="{% url 'eliminar_cata' cata.id %}" 
+                                                   class="btn btn-danger" 
+                                                   title="Eliminar"
+                                                   data-bs-toggle="tooltip">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                         <div class="mt-3 alert-cafe">
+        <strong>Acciones:</strong>
+        <ul class="mb-0">
+            <li>
+                <i class="fas fa-eye text-info me-1"></i> 
+                <strong>Ver detalle:</strong> Muestra detalles para esta cata.
+            </li>
+            <li>
+                <i class="fas fa-edit text-warning me-1"></i> 
+                <strong>Editar:</strong> Te permite modificar los datos de la cata.
+            </li>
+            <li>
+                <i class="fas fa-trash-alt text-danger me-1"></i> 
+                <strong>Eliminar:</strong> Borra la cata de forma permanente.
+            </li>
+            <li>
+                <span class="badge" style="background-color: #6f4e37;">100.0</span> 
+                <strong>Puntuación:</strong> Valor total calculado para a esta cata.
+            </li>
+        </ul>
+    </div>
+                    {% else %}
+                        <div class="alert alert-warning text-center">
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                            No se encontraron catas para esta identificación.
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-icons">
+                <a href="https://www.instagram.com/vertexcoffee92/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i> Vertex 92 Coffee
+                </a>
+        </div>
+        <div>&copy; 2025 Cata de Café · Todos los derechos reservados · By: TechBrew Collective Colombia (Jonnatan Arias-Garcia)</div>
+    </footer>
+</div>
+
+<!-- Bootstrap JS + Tooltips -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+</script>
+</body>
+</html>

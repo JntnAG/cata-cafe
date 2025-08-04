@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>☕ Inicio - Cata de Café</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-image: url('https://images.unsplash.com/photo-1560354297-55157b7ef809?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+        }
+
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.92);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .main-content {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+        }
+
+        .btn-primary {
+            background-color: #6f4e37;
+            border-color: #6f4e37;
+        }
+
+        .btn-success {
+            background-color: #4e8b5a;
+            border-color: #4e8b5a;
+        }
+
+        .btn-warning {
+            background-color: #c97d38;
+            border-color: #c97d38;
+        }
+
+        h1, .card-title {
+            color: #4b3621;
+        }
+
+        .logo-cafe {
+            width: 70px;
+            margin: 10px;
+        }
+
+        footer {
+            background-color: #6f4e37;
+            color: white;
+            padding: 20px 10px;
+            text-align: center;
+        }
+
+        .footer-icons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .footer-icons a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-icons a:hover {
+            color: #d8bfa2;
+        }
+
+        @media (max-width: 576px) {
+            .logo-cafe {
+                width: 60px;
+            }
+
+            h1.display-5 {
+                font-size: 1.8rem;
+            }
+
+            .card-body p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        <!-- Contenido principal -->
+        <div class="main-content container-fluid text-center">
+            <!-- vertex -->
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTK3235gksLGgdPTsaDmqihYfITJlbbDFvnVg&s" class="logo-cafe" alt="Logo Café">
+            <!-- collarejo -->
+            <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQss8JCyz9_h_5d9MvjQDGbg6SIs1LgNxPWCg&s" class="logo-cafe" alt="Logo Café"> -->
+
+            <h1 class="display-5">Bienvenido a la Plataforma de Cata de Café</h1>
+            <p class="lead mb-5">Elige una opción para continuar:</p>
+
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-coffee me-2"></i>Hacer una Cata</h5>
+                            <p class="card-text">Ingresa una nueva evaluación sensorial del café.</p>
+                            <a href="{% url 'hacer_cata' %}" class="btn btn-primary"><i class="fas fa-edit me-1"></i>Ir a Cata</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-folder-open me-2"></i>Ver mis Catas</h5>
+                            <p class="card-text">Consulta todas las catas asociadas a tu identificación.</p>
+                            <a href="{% url 'ver_mis_catas' %}" class="btn btn-success"><i class="fas fa-search me-1"></i>Consultar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-seedling me-2"></i>Buscar por Matrícula</h5>
+                            <p class="card-text">Revisa catas asociadas a una matrícula de café específica.</p>
+                            <a href="{% url 'buscar_por_matricula' %}" class="btn btn-warning text-white"><i class="fas fa-search-location me-1"></i>Buscar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pie de página -->
+        <footer>
+            <div class="footer-icons">
+                <a href="https://www.instagram.com/vertexcoffee92/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i> Vertex 92 Coffee
+                </a>
+                <!-- <a href="https://www.instagram.com/collarejohouse/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i> Collarejo House
+                </a> -->
+            </div>
+            <div>&copy; 2025 Cata de Café · Todos los derechos reservados · By: TechBrew Collective Colombia (Jonnatan Arias-Garcia)</div>
+        </footer>
+    </div>
+</body>
+</html>

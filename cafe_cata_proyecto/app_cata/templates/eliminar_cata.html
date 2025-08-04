@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Eliminar Cata</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: url('https://images.unsplash.com/com-1509042239860-f550ce710b93') no-repeat center center / cover;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.9);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .btn-danger {
+      background-color: #a94442;
+      border-color: #a94442;
+    }
+
+    .btn-secondary {
+      background-color: #888;
+      border-color: #888;
+    }
+
+    footer {
+      background-color: #6f4e37;
+      color: white;
+      padding: 20px 10px;
+      text-align: center;
+    }
+
+    .footer-icons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    .footer-icons a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-icons a:hover {
+      color: #d8bfa2;
+    }
+
+    @media (max-width: 576px) {
+      .card {
+        margin-top: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="container text-center">
+      <div class="card shadow mx-auto" style="max-width: 500px;">
+        <div class="card-body">
+          <h2 class="card-title text-danger"><i class="fas fa-trash-alt me-2"></i>Eliminar Cata</h2>
+          <p class="card-text">¿Estás seguro que deseas eliminar esta cata de <strong>{{ cata.nombre }}</strong>?</p>
+
+          <form method="post" class="mt-4">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger me-2"><i class="fas fa-check"></i> Confirmar</button>
+            <a href="{% url 'detalle_cata' cata.id %}" class="btn btn-secondary"><i class="fas fa-times"></i> Cancelar</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-icons">
+      <a href="https://www.instagram.com/vertexcoffee92/" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-instagram"></i> Vertex 92 Coffee
+      </a>
+    </div>
+    <div>&copy; 2025 Cata de Café · Todos los derechos reservados · By: </div>
+  </footer>
+</body>
+</html>

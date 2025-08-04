@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>☕ Buscar por Matrícula</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Bootstrap + Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-image: url('https://images.unsplash.com/photo-1560354297-55157b7ef809?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+    }
+
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.92);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .main-content {
+      padding-top: 60px;
+      padding-bottom: 40px;
+    }
+
+    .card {
+      border: none;
+      border-radius: 15px;
+      padding: 20px;
+      background-color: #ffffffd9;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .btn-primary {
+      background-color: #6f4e37;
+      border-color: #6f4e37;
+    }
+
+    .btn-secondary {
+      background-color: #4e8b5a;
+      border-color: #4e8b5a;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background-color: #3a6e45;
+    }
+
+    h1, h2, h4 {
+      color: #4b3621;
+    }
+
+    .grafico-radar {
+      width: 100%;
+      max-width: 700px;
+      margin: 20px auto;
+      display: block;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    footer {
+      background-color: #6f4e37;
+      color: white;
+      padding: 20px 10px;
+      text-align: center;
+    }
+
+    .footer-icons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+
+    .footer-icons a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-icons a:hover {
+      color: #d8bfa2;
+    }
+
+    @media (max-width: 576px) {
+      .grafico-radar {
+        max-width: 100%;
+      }
+
+      .form-control {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="overlay">
+    <div class="container main-content">
+      <div class="card mx-auto" style="max-width: 800px;">
+        <div class="card-header bg-transparent border-0 text-center">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTK3235gksLGgdPTsaDmqihYfITJlbbDFvnVg&s" 
+               class="logo-cafe mb-3" 
+               alt="Logo Café" style="width: 70px;">
+          <h1 class="mb-0">Buscar por Matrícula</h1>
+        </div>
+
+        <div class="card-body">
+          <form class="mb-4" action="{% url 'buscar_por_matricula' %}" method="GET">
+            <label for="matricula" class="form-label">Ingrese la matrícula:</label>
+            <div class="d-flex flex-wrap align-items-center gap-2">
+              <input type="text" class="form-control" id="matricula" name="matricula" value="{{ matricula }}" required>
+              <button type="submit" class="btn btn-primary"><i class="fas fa-search me-1"></i>Buscar</button>
+              <a href="{% url 'home' %}" class="btn btn-secondary">
+                <i class="fas fa-home me-1"></i> Inicio
+              </a>
+            </div>
+          </form>
+
+          {% if resultados %}
+            <h4 class="mt-4">Resultados para matrícula: <strong>{{ matricula }}</strong></h4>
+
+            {% if grafico %}
+              <div class="text-center">
+                <h5>Perfil Sensorial Promedio + Individuales</h5>
+                <img class="grafico-radar" src="data:image/png;base64,{{ grafico }}" alt="Gráfico Radar">
+              </div>
+            {% endif %}
+
+            <div class="row mt-4">
+              {% for resultado in resultados %}
+                <div class="col-md-6">
+                  <div class="card">
+                    <p><strong>Catador:</strong> {{ resultado.nombre }}</p>
+                    <p><strong>Fecha:</strong> {{ resultado.fecha|date:"d/m/Y H:i" }}</p>
+                    <p><strong>Puntaje Total: </strong>{{ resultado.puntuacion_total }}</p>
+                    <p><strong>Observaciones:</strong> {{ resultado.observaciones|default:"Sin observaciones." }}</p>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+          {% elif mensaje %}
+            <div class="alert alert-warning mt-3 text-center">
+              <i class="fas fa-exclamation-circle me-2"></i> {{ mensaje }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-icons">
+        <a href="https://www.instagram.com/vertexcoffee92/" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-instagram"></i> Vertex 92 Coffee
+        </a>
+      </div>
+      <div>&copy; 2025 Cata de Café · Todos los derechos reservados · By: TechBrew Collective Colombia (Jonnatan Arias-Garcia)</div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

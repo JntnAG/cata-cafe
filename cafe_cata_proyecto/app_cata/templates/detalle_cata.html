@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>☕ Detalle de Cata</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-image: url('https://images.unsplash.com/photo-1560354297-55157b7ef809?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+        }
+
+        .overlay {
+            background-color: rgba(255, 255, 255, 0.92);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .main-content {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            padding: 20px;
+            background-color: #ffffffd9;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background-color: #6f4e37;
+            border-color: #6f4e37;
+        }
+
+        .btn-secondary {
+            background-color: #4e8b5a;
+            border-color: #4e8b5a;
+        }
+
+        .btn-warning {
+            background-color: #d4a30b;
+            border-color: #d4a30b;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #a94442;
+            border-color: #a94442;
+            color: white;
+        }
+
+        h2, h5 {
+            color: #4b3621;
+        }
+
+        footer {
+            background-color: #6f4e37;
+            color: white;
+            padding: 20px 10px;
+            text-align: center;
+        }
+
+        .footer-icons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .footer-icons a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-icons a:hover {
+            color: #d8bfa2;
+        }
+
+        .info-catador {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            margin-bottom: 8px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #6f4e37;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        <div class="container main-content text-center">
+            <div class="card mx-auto" style="max-width: 600px;">
+                <h2 class="text-success mb-4">Detalle de Cata</h2>
+
+                {% if grafico %}
+                <div class="info-catador text-start">
+                    <div class="info-item">
+                        <span class="info-label">Catador:</span> {{ catador }}
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Fecha:</span> {{ fecha }}
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Matrícula Café:</span> {{ matricula_cafe }}
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">ID (últimos 4 dígitos):</span> {{ ultimos_digitos }}
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Puntuación Total:</span> {{ puntuacion }}
+                    </div>
+                </div>
+
+                <div class="my-4">
+                    <h5 class="mb-3">Perfil sensorial</h5>
+                    <img src="data:image/png;base64,{{ grafico }}" class="img-fluid rounded" alt="Perfil sensorial">
+                </div>
+                {% endif %}
+
+                <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{% url 'ver_mis_catas' %}?identificacion={{ identificacion }}" class="btn btn-primary">
+                        <i class="fas fa-arrow-left me-1"></i> Volver a mis catas
+                    </a>
+                    <a href="{% url 'editar_cata' cata_id %}" class="btn btn-warning">
+                        <i class="fas fa-edit me-1"></i> Editar
+                    </a>
+                    <a href="{% url 'eliminar_cata' cata_id %}" class="btn btn-danger">
+                        <i class="fas fa-trash me-1"></i> Eliminar
+                    </a>
+                    <a href="{% url 'home' %}" class="btn btn-secondary">
+                        <i class="fas fa-home me-1"></i> Inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-icons">
+                <a href="https://www.instagram.com/vertexcoffee92/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i> Vertex 92 Coffee
+                </a>
+            </div>
+            <div>&copy; 2025 Cata de Café · Todos los derechos reservados · By: TechBrew Collective Colombia (Jonnatan Arias-Garcia)</div>
+        </footer>
+    </div>
+</body>
+</html>
