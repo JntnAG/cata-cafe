@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -217,6 +219,7 @@
     <div class="container">
       <div class="text-center mt-4">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTK3235gksLGgdPTsaDmqihYfITJlbbDFvnVg&s" class="logo-cafe" alt="Logo Café">
+        <img src="{% static 'app_cata/img/logo-Back.png' %}" alt="Logo Nebulityka" class="logo-cafe">
         <h1 class="display-6 mt-2 mb-2">Formulario de Cata de Café</h1>
         <p class="lead">Ingresa los datos de la evaluación sensorial</p>
       </div>
@@ -481,10 +484,13 @@
       <div class="footer-icons">
         <a href="https://www.instagram.com/vertexcoffee92/" target="_blank" rel="noopener noreferrer">
           <i class="fab fa-instagram"></i> Vertex 92 Coffee
+                          <a href="https://www.instagram.com/nebulityka/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i> Nebulityka
+                </a>
         </a>
       </div>
       <div class="mt-1">
-        &copy; 2025 Cata de Café · Todos los derechos reservados · By: TechBrew Collective Colombia (Jonnatan Arias-Garcia)
+            <div>&copy; 2025 Cata de Café · Todos los derechos reservados · <strong>Nebulityka</strong> : Servicios en la nube, inteligencia artificial y analítica</div>
       </div>
     </footer>
   </div>
