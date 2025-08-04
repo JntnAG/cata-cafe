@@ -30,13 +30,15 @@ class CataForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'tueste': forms.RadioSelect(choices=Cata.TUESTE_CHOICES),
-            'fraganciaAroma': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6 a 10',}),            
-            'sabor': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6 a 10',}),
-            'residual': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6 a 10'}),
-            'acidez': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6 a 10'}),
-            'cuerpo': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6 a 10'}),
-            'balance': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6 a 10'}),
-            'puntaje_catador': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6 a 10'}),
+            'fraganciaAroma': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6.0 a 10.0',}),            
+            'sabor': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6.0 a 10.0',}),
+            'residual': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6.0 a 10.0'}),
+            'acidez': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6.0 a 10.0'}),
+            'cuerpo': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6.0 a 10.0'}),
+            'balance': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6.0 a 10.0'}),
+            'puntaje_catador': forms.NumberInput(attrs={'step': '0.25', 'min': '6', 'max': '10','placeholder': '6.0 a 10.0'}),
+
+
             
             'intensidad_fragancia': forms.NumberInput(attrs={'type':'range','min': '0', 'max': '10', 'step':'1','class':'vertical-slider'}),
             'intensidad_aroma': forms.NumberInput(attrs={'type':'range','min': '0', 'max': '10', 'step':'1','class':'vertical-slider'}),

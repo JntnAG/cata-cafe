@@ -172,35 +172,18 @@
       text-align: right;
     }
 
-
-  .number-spinner {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-  }
-
-.number-spinner input[type="number"] {
-    -moz-appearance: textfield;
-    appearance: textfield;
-    text-align: center;
-  }
-
-
-    .btn-outline-secondary {
-      background-color: #e9e9ed;
-      color: #4b3621;
-      border: 1px solid #ccc;
-      padding: 0.25rem 0.6rem;
-      font-size: 0.9rem;
-      border-radius: 6px;
-      transition: background-color 0.2s ease;
+    .number-spinner {
+      display: flex;
+      align-items: center;
     }
-
-    .btn-outline-secondary:hover {
-      background-color: #d6d6dc;
+    .number-spinner button {
+      width: 30px;
+      height: 30px;
+      font-size: 20px;
+    }
+    .number-spinner input {
+      width: 60px;
+      text-align: center;
     }
 
 
@@ -313,13 +296,10 @@
               <!-- Atributos sensoriales -->
               <div class="section-title">Atributos Sensoriales</div>
               <div class="row">
-                  <div class="number-spinner col-md-6 form-group">
-                    <label class="form-label">Fragancia/Aroma</label>
-                    <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_fraganciaAroma')">–</button>
-                    {{ form.fraganciaAroma }}
-                    <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_fraganciaAroma')">+</button>
-                  </div>
-
+                <div class="col-md-6 form-group">
+                  <label class="form-label">Fragancia/Aroma </label>
+                  {{ form.fraganciaAroma }}
+                </div>
                     <div class="col-md-3 form-group">
                         <label class="form-label">{{ form.intensidad_fragancia.label }} (Seco)</label><br>
                         {{ form.intensidad_fragancia }}
@@ -328,28 +308,18 @@
                           <label class="form-label">{{ form.intensidad_aroma.label }} (Espuma)</label><br>
                           {{ form.intensidad_aroma }}
                     </div>
-
-                  <div class="number-spinner col-md-6 form-group">
-                    <label class="form-label">{{ form.sabor.label }}</label>
-                    <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_sabor')">–</button>
-                    {{ form.sabor }}
-                    <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_sabor')">+</button>
-                  </div>
-
-                  <div class="number-spinner col-md-6 form-group">
-                    <label class="form-label">{{ form.residual.label }}</label>
-                    <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_residual')">–</button>
-                    {{ form.residual }}
-                    <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_residual')">+</button>
-                  </div>
-
-                  <div class="number-spinner col-md-6 form-group">
-                    <label class="form-label">{{ form.acidez.label }}</label>
-                    <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_acidez')">–</button>
-                    {{ form.acidez }}
-                    <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_acidez')">+</button>
-                  </div>
-
+                <div class="col-md-6 form-group">
+                  <label class="form-label">{{ form.sabor.label }} </label>
+                  {{ form.sabor }}
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="form-label">{{ form.residual.label }} </label>
+                  {{ form.residual }}
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="form-label">{{ form.acidez.label }} </label>
+                  {{ form.acidez }}
+                </div>
 
                       <div class="col-md-3 form-group">
                         <label class="form-label">{{ form.intensidad_acidez.label }} (Alta/Baja)</label><br>
@@ -357,11 +327,9 @@
                       </div>
 
 
-                <div class="number-spinner col-md-6 form-group">
-                  <label class="form-label">{{ form.cuerpo.label }}</label>
-                  <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_cuerpo')">–</button>
+                <div class="col-md-6 form-group">
+                  <label class="form-label">{{ form.cuerpo.label }} </label>
                   {{ form.cuerpo }}
-                  <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_cuerpo')">+</button>
                 </div>
                       <div class="col-md-3 form-group">
                         <label class="form-label">{{ form.intensidad_cuerpo.label }} (Pesado/Delgado)</label><br>
@@ -369,11 +337,9 @@
                       </div>
 
                 
-                <div class="number-spinner col-md-6 form-group">
-                  <label class="form-label">{{ form.balance.label }}</label>
-                  <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_balance')">–</button>
+                <div class="col-md-6 form-group">
+                  <label class="form-label">{{ form.balance.label }} </label>
                   {{ form.balance }}
-                  <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_balance')">+</button>
                 </div>
               </div>
 
@@ -382,67 +348,80 @@
               <!-- Tazas y defectos -->
               <div class="section-title">Tazas y Defectos</div>
               <div class="row">
-                <div class="number-spinner">
+                <div class="col-md-4 form-group">
                   <label class="form-label">{{ form.tazas.label }}</label>
-                  <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_tazas')"> – </button>
-                  {{ form.tazas }}
-                  <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_tazas')"> + </button>
-                  <small class="text-muted">Cantidad tazas</small>
+                  {{ form.tazas }} <small class="text-muted">Cantidad tazas</small>
+
                 </div>
-
+                <!-- orgiginal  -->
+                <div class="col-md-4 form-group">
+                  <label class="form-label">{{ form.defectos_ligero.label }}</label>
+                  {{ form.defectos_ligero }}
+                  <small class="text-muted">Resta 2 puntos c/u</small>
+                </div>
+               <!-- test -->
               <div class="number-spinner">
-                <label class="form-label">{{ form.defectos_ligero.label }}</label>
-                <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_defectos_ligero')"> – </button>
-                {{ form.defectos_ligero }}
-                <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_defectos_ligero')"> + </button>
-                <small class="text-muted">Resta 2 puntos c/u</small>
+                <button type="button" onclick="this.nextElementSibling.stepDown()">–</button>
+                <input type="number" name="defectos_ligero" min="0" step="1" value="0">
+                <button type="button" onclick="this.previousElementSibling.stepUp()">+</button>
               </div>
 
-              <div class="number-spinner">
-                <label class="form-label">{{ form.defectos_rechazo.label }}</label>
-                <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_defectos_rechazo')"> – </button>
-                {{ form.defectos_rechazo }}
-                <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_defectos_rechazo')"> + </button>
-                <small class="text-muted">Resta 4 puntos c/u</small>
-              </div>
+              <!-- integrado -->
+              <div class="col-md-4 form-group">
+  <label class="form-label">{{ form.defectos_ligero.label }}</label>
+  <div class="number-spinner d-flex align-items-center">
+    <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_defectos_ligero')">–</button>
+    {{ form.defectos_ligero }}
+    <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_defectos_ligero')">+</button>
+  </div>
+  <small class="text-muted">Resta 2 puntos c/u</small>
+</div>
 
+<script>
+  function stepDownField(id) {
+    const input = document.getElementById(id);
+    if (input && input.stepDown) input.stepDown();
+  }
+  function stepUpField(id) {
+    const input = document.getElementById(id);
+    if (input && input.stepUp) input.stepUp();
+  }
+</script>
+
+              
+
+                <div class="col-md-4 form-group">
+                  <label class="form-label">{{ form.defectos_rechazo.label }}</label>
+                  {{ form.defectos_rechazo }}
+                  <small class="text-muted">Resta 4 puntos c/u</small>
+                </div>
+              </div>
 
               <!-- Puntaje -->
-              <div class="number-spinner form-group">
-                <label class="form-label">{{ form.puntaje_catador.label }}</label>
-                <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_puntaje_catador')">–</button>
+              <div class="form-group">
+                <label class="form-label">{{ form.puntaje_catador.label }} </label>
                 {{ form.puntaje_catador }}
-                <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_puntaje_catador')">+</button>
               </div>
 
 
               <!-- Checkboxes -->
               <div class="section-title">Atributos (cada uno resta x2)</div>
               <div class="row">
-                <div class="col-md-4 form-group number-spinner">
+                <div class="col-md-4 form-group">
                   <label class="form-label">{{ form.uniformidad.label }}</label>
-                  <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_uniformidad')">–</button>
                   {{ form.uniformidad }}
-                  <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_uniformidad')">+</button>
                   <small class="text-muted">Cantidad de tazas no uniformes</small>
                 </div>
-
-                <div class="col-md-4 form-group number-spinner">
+                <div class="col-md-4 form-group">
                   <label class="form-label">{{ form.taza_limpia.label }}</label>
-                  <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_taza_limpia')">–</button>
                   {{ form.taza_limpia }}
-                  <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_taza_limpia')">+</button>
                   <small class="text-muted">Cantidad de tazas con defectos</small>
                 </div>
-
-                <div class="col-md-4 form-group number-spinner">
+                <div class="col-md-4 form-group">
                   <label class="form-label">{{ form.dulzura.label }}</label>
-                  <button type="button" class="btn btn-outline-secondary" onclick="stepDownField('id_dulzura')">–</button>
                   {{ form.dulzura }}
-                  <button type="button" class="btn btn-outline-secondary" onclick="stepUpField('id_dulzura')">+</button>
                   <small class="text-muted">Cantidad de tazas con diferente dulzor</small>
                 </div>
-
               </div>
 
 
@@ -451,17 +430,6 @@
               <div class="form-group">
                 {{ form.observaciones }}
               </div>
-
-              <script>
-              function stepDownField(id) {
-                const input = document.getElementById(id);
-                if (input && input.stepDown) input.stepDown();
-              }
-              function stepUpField(id) {
-                const input = document.getElementById(id);
-                if (input && input.stepUp) input.stepUp();
-              }
-              </script>
 
               <!-- Botones -->
               <div class="text-end mt-4">
