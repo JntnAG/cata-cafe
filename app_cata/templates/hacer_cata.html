@@ -172,13 +172,18 @@
       text-align: right;
     }
 
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-      -webkit-appearance: inner-spin-button !important;
-      appearance: auto !important;
-      opacity: 1 !important;
-      margin: 0;
-      display: inline-block;
+    .number-spinner {
+      display: flex;
+      align-items: center;
+    }
+    .number-spinner button {
+      width: 30px;
+      height: 30px;
+      font-size: 20px;
+    }
+    .number-spinner input {
+      width: 60px;
+      text-align: center;
     }
 
 
@@ -353,6 +358,12 @@
                   {{ form.defectos_ligero }}
                   <small class="text-muted">Resta 2 puntos c/u</small>
                 </div>
+               <!-- test -->
+                <div class="number-spinner">
+                <button type="button" onclick="this.nextElementSibling.stepDown()">–</button>
+                <input type="number" name="defectos_ligero" min="0" step="1" value="0">
+                <button type="button" onclick="this.previousElementSibling.stepUp()">+</button>
+              </div>
                 <div class="col-md-4 form-group">
                   <label class="form-label">{{ form.defectos_rechazo.label }}</label>
                   {{ form.defectos_rechazo }}

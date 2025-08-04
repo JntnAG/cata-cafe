@@ -49,7 +49,7 @@ class CataForm(forms.ModelForm):
             'tazas': forms.NumberInput(attrs={'min': '1', 'max': '10',}),
             'defectos_ligero': forms.NumberInput(attrs={'min': '0', 'max': '10'}),
             'defectos_rechazo': forms.NumberInput(attrs={'min': '0', 'max': '10'}),
-            'observaciones': forms.Textarea(attrs={'rows': 3}),
+            'observaciones': forms.Textarea(attrs={'rows': 3, 'style': 'width: 100%;'}),
         }
 
     # Validaciones personalizadas
