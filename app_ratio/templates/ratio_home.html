@@ -1,0 +1,417 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>☕ Calculadora de Ratio - Café</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .overlay {
+        background-color: rgba(255, 255, 255, 0.95);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        }
+
+        .logo-cafe {
+        width: 60px;
+        height: 60px;
+        }
+        .slider-label { font-weight: bold; }
+        .slider-container { position: relative; padding: 3rem 0 4rem 0; }
+
+        .slider-marks,
+        .slider-marks-bottom {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top:40%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            padding: 0 4px;
+            color: #6f4e37;
+        }
+
+        .slider-marks-bottom {
+            top: 50px;
+            color: #4e8b5a;
+        }
+
+        .form-range::-webkit-slider-runnable-track {
+            height: 8px;
+            background: #d5c68c;
+            border-radius: 5px;
+        }
+
+        .form-range::-webkit-slider-thumb {
+            background-color: #6f4e37;
+            border: none;
+            width: 18px;
+            height: 18px;
+            margin-top: -5px;
+        }
+
+        .form-range::-moz-range-track {
+            height: 8px;
+            background: #d5c68c;
+            border-radius: 5px;
+        }
+
+        .form-range::-moz-range-thumb {
+            background-color: #6f4e37;
+            border: none;
+            width: 18px;
+            height: 18px;
+        }
+
+        .input-group-text {
+            background-color: #f0e6d2;
+            border: 1px solid #ccc;
+        }
+
+        .footer {
+        background-color: #6f4e37;
+        color: white;
+        text-align: center;
+        padding: 1rem 0;
+        }
+
+        .footer-icons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-bottom: 10px;
+        }
+
+        .footer a {
+        color: white;
+        text-decoration: none;
+        }
+
+        .footer a:hover {
+        color: #ffd700;
+        }
+
+        .btn-verde {
+        background-color: #4e8b5a;
+        color: white;
+        border: none;
+        }
+
+        .btn-verde:hover {
+        background-color: #3a6e45;
+        }
+        @media (max-width: 576px) {
+            .slider-marks span,
+            .slider-marks-bottom span {
+                font-size: 0.6rem;
+            }
+
+            .btn-group .btn {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.6rem;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            .table {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay">
+
+    <div class="container">
+        <div class="text-center mt-4">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTK3235gksLGgdPTsaDmqihYfITJlbbDFvnVg&s" class="logo-cafe" alt="Logo Café">
+            <img src="https://scontent.cdninstagram.com/v/t51.82787-19/526847857_17846363316538629_4909773571762180225_n.jpg?stp=cp0_dst-jpg_s110x80_tt6&_nc_cat=110&ccb=1-7&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=lPksy9ToxJoQ7kNvwErFG9v&_nc_oc=AdkKRZJrLfxYC8gMOGOejOY5o7v_3TFXw6uIcsGNTxDPyv6-Mblw0jBDNqmfWhMsR_A&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_gid=rKsVUNPOuQBdPGUtAQfSIA&oh=00_AfV1xWgAdF9t5pQ_XesMjsjZDwxrLtK-MCp5DL0JaNjxWQ&oe=68972A50" alt="Logo Nebulityka" class="logo-cafe">
+            <h1 class="display-6 mt-2 mb-2">Calculadora de Ratio de Café</h1>
+            <!-- <p class="lead">Ingresa los datos de la evaluación sensorial</p> -->
+        </div>
+
+              <div class="text-end mt-4">
+                <a href="{% url 'home' %}" class="btn btn-verde">
+                  <i class="fas fa-home me-1"></i> Inicio
+                </a>
+              </div>
+
+        <!-- Paso 1: Método de preparación -->
+        <div class="mb-4">
+            <label for="metodo" class="form-label slider-label">Elige el método de preparación:</label>
+            <select id="metodo" class="form-select">
+                <option value="V60">V60</option>
+                <option value="Chemex">Chemex</option>
+                <option value="Prensa Francesa">Prensa Francesa</option>
+                <option value="Goteo">Goteo</option>
+                <option value="Aeropress">Aeropress</option>
+                <option value="Moka">Moka</option>
+                <option value="Sifón">Sifón</option>
+                <option value="Coldbrew">Coldbrew</option>
+            </select>
+        </div>
+
+        <!-- Paso 1b: Slider con marcas y campo de entrada -->
+        <div class="mb-5">
+            <label for="agua" class="form-label slider-label">
+             Cantidad de agua:
+            </label>
+
+            <input type="range" class="form-range" min="50" max="1000" step="1" id="agua" value="250" oninput="actualizarDesdeSlider()">
+            <div class="input-group mt-4">
+                <span class="input-group-text">💧 ml / gr de agua</span>
+                <input type="number" class="form-control" id="agua_input" min="50" max="1000" value="250" step="1" onchange="actualizarDesdeInput()">
+            </div>
+        </div>
+
+        <!-- Paso 2: Fuerza -->
+        <div class="mb-4">
+            <label for="fuerza" class="form-label slider-label">Selecciona la fuerza del café:</label>
+            <select id="fuerza" class="form-select" onchange="actualizarResultadoDesdeFuerza()">
+                <option value="suave">☁️ Suave</option>
+                <option value="promedio" selected>🌤️ Promedio</option>
+                <option value="fuerte">🔥 Fuerte</option>
+                <option value="robusto">💣 Robusto</option>
+            </select>
+        </div>
+
+        <!-- Resultado -->
+        <div class="mb-4">
+            <label for="cafe_resultado" class="form-label slider-label"> Cantidad de café necesaria:</label>
+            <input type="text" class="form-control" id="cafe_resultado" readonly>
+            <small class="text-muted" id="ratio_info"></small>
+        </div>
+
+        <!-- Tueste -->
+        <div class="mb-4">
+            <label class="form-label slider-label">Nivel de tueste del café:</label>
+            <div class="btn-group w-100 mb-2" role="group" aria-label="Nivel de tueste" id="tueste_selector">
+                <input type="radio" class="btn-check" name="tueste" id="tueste_suave" autocomplete="off" checked onchange="actualizarTemperatura()">
+                <label class="btn btn-outline-light" style="background-color: #cfa66b;" for="tueste_suave">Suave</label>
+
+                <input type="radio" class="btn-check" name="tueste" id="tueste_medio" autocomplete="off" onchange="actualizarTemperatura()">
+                <label class="btn btn-outline-light" style="background-color: #7b3f00;" for="tueste_medio">Medio</label>
+
+                <input type="radio" class="btn-check" name="tueste" id="tueste_oscuro" autocomplete="off" onchange="actualizarTemperatura()">
+                <label class="btn btn-outline-light" style="background-color: #3e2723; color: white;" for="tueste_oscuro">Oscuro</label>
+            </div>
+            <p>🌡️ Temperatura recomendada del agua: <strong id="temp_agua">90–96°C</strong></p>
+        </div>
+
+        <!-- Tabla molienda -->
+        <div class="table-responsive mt-4">
+            <label class="form-label slider-label">(Información) Tabla de Molienda:</label>
+            <table class="table table-bordered text-center align-middle">
+                <thead class="table-light" style="  --bs-table-bg: #f0e6d2;">
+                    <tr><th>Método</th><th>Molienda recomendada</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Goteo</td><td>Media</td></tr>
+                    <tr><td>V60</td><td>Media</td></tr>
+                    <tr><td>Chemex</td><td>Media</td></tr>
+                    <tr><td>Prensa Francesa</td><td>Gruesa</td></tr>
+                    <tr><td>Aeropress</td><td>Media</td></tr>
+                    <tr><td>Moka</td><td>Fina</td></tr>
+                    <tr><td>Sifón</td><td>Media</td></tr>
+                    <tr><td>Cold Brew</td><td>Gruesa</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tiempo extracción -->
+        <label class="form-label slider-label">Selecciona tu preferencia de extracción</label>
+        <div class="btn-group mb-3" role="group" aria-label="Tiempo de infusión">
+            <button type="button" class="btn btn-outline-success" onclick="sugerirTiempo('rapido')">Rápido (Suave)</button>
+            <button type="button" class="btn btn-outline-warning" onclick="sugerirTiempo('promedio')">Promedio (Balanceado)</button>
+            <button type="button" class="btn btn-outline-danger" onclick="sugerirTiempo('lento')">Lento (Robusto)</button>
+        </div>
+        <div id="resultado-tiempo" class="alert shadow-sm rounded-4 p-3" style="background-color: #fdf6ee; border: 2px solid #cfa66b; color: #4b2e20;">            
+            Selecciona una opción para ver el tiempo sugerido.
+        </div>
+
+        <!-- Botón resumen -->
+        <div class="text-center mb-3">
+            <button class="btn shadow-sm px-4 py-2 rounded-4" 
+                    style="background-color: #7b3f00; border: none; color: white;" 
+                    onclick="mostrarResumen()">
+                📄 Mostrar Resumen 
+            </button>
+        </div>
+
+
+        <!-- Tabla resumen -->
+        <div class="mt-5">
+            <label class="form-label slider-label">Resumen de Preparación</label>
+            <table class="table table-bordered table-striped text-center align-middle" id="tablaResumen" style="display: none;">
+                <thead class="table-light"  style="  --bs-table-bg: #f0e6d2;">
+                    <tr>
+                        <th>Método</th><th>Agua (ml)</th><th>Fuerza</th><th>Ratio</th><th>Café (g)</th><th>Tueste</th><th>Temp. Agua</th><th>Tiempo Infusión</th>
+                    </tr>
+                </thead>
+                <tbody id="resumenBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+
+        <footer class="footer mt-auto">
+      <div class="footer-icons">
+        <a href="https://www.instagram.com/vertexcoffee92/" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-instagram"></i> Vertex 92 Coffee
+                          <a href="https://www.instagram.com/nebulityka/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i> Nebulityka
+                </a>
+        </a>
+      </div>
+      <div class="mt-1">
+            <div>&copy; 2025 Cata de Café · Todos los derechos reservados · <strong>Nebulityka</strong> : Servicios en la nube, inteligencia artificial y analítica</div>
+      </div>
+    </footer>
+<script>
+    const ratios = {
+        V60: { suave: 18, promedio: 16, fuerte: 15, robusto: 13 },
+        Chemex: { suave: 18, promedio: 16, fuerte: 15, robusto: 13 },
+        "Prensa Francesa": { suave: 18, promedio: 16, fuerte: 14, robusto: 12 },
+        Goteo: { suave: 18, promedio: 16, fuerte: 15, robusto: 13 },
+        Aeropress: { suave: 17, promedio: 14, fuerte: 13, robusto: 12 },
+        Moka: { suave: 9, promedio: 8, fuerte: 7, robusto: 6 },
+        Sifón: { suave: 16, promedio: 14, fuerte: 12, robusto: 11 },
+        Coldbrew: { suave: 16, promedio: 14, fuerte: 11, robusto: 9 }
+    };
+
+    const tiemposBase = {
+        "Prensa Francesa": { suave: 180, medio: 210, oscuro: 240 },
+        "Chemex": { suave: 210, medio: 240, oscuro: 270 },
+        "V60": { suave: 150, medio: 180, oscuro: 210 },
+        "Aeropress": { suave: 120, medio: 150, oscuro: 180 },
+        "Moka": null,
+        "Sifón": { suave: 180, medio: 210, oscuro: 240 },
+        "Goteo": { suave: 180, medio: 210, oscuro: 240 },
+        "Coldbrew": { suave: 600, medio: 720, oscuro: 900 },
+        "Espresso": null
+    };
+
+    function getSelectedMethod() { return document.getElementById('metodo').value; }
+    function getSelectedStrength() { return document.getElementById('fuerza').value; }
+    function getRatio(method, strength) { return ratios[method]?.[strength] || 16; }
+
+    function actualizarResultado(agua) {
+        const metodo = getSelectedMethod();
+        const fuerza = getSelectedStrength();
+        const ratio = getRatio(metodo, fuerza);
+        const cafe = (agua / ratio).toFixed(1);
+        document.getElementById('cafe_resultado').value = `${cafe} g`;
+        document.getElementById('ratio_info').innerText = `Ratio 1:${ratio} para ${metodo} (${fuerza})`;
+    }
+
+    function actualizarDesdeSlider() {
+        const agua = document.getElementById('agua').value;
+        document.getElementById('agua_input').value = agua;
+        actualizarResultado(agua);
+    }
+
+    function actualizarDesdeInput() {
+        let agua = parseInt(document.getElementById('agua_input').value);
+        agua = Math.max(50, Math.min(1000, agua));
+        document.getElementById('agua').value = agua;
+        actualizarResultado(agua);
+    }
+
+    function actualizarResultadoDesdeFuerza() {
+        const agua = document.getElementById('agua').value;
+        actualizarResultado(agua);
+    }
+
+    function actualizarTemperatura() {
+        let tempTexto = "90–96°C";
+        if (document.getElementById("tueste_suave").checked) tempTexto = "93–96°C";
+        else if (document.getElementById("tueste_medio").checked) tempTexto = "90–93°C";
+        else if (document.getElementById("tueste_oscuro").checked) tempTexto = "87–90°C";
+        document.getElementById("temp_agua").textContent = tempTexto;
+    }
+
+    function getTueste() {
+        if (document.getElementById("tueste_suave").checked) return "suave";
+        if (document.getElementById("tueste_medio").checked) return "medio";
+        if (document.getElementById("tueste_oscuro").checked) return "oscuro";
+        return "medio";
+    }
+
+    function sugerirTiempo(preferencia) {
+        const metodo = getSelectedMethod();
+        const tueste = getTueste();
+
+        if (!tiemposBase[metodo]) {
+            document.getElementById("resultado-tiempo").innerHTML = `❌ No hay datos de tiempo para el método seleccionado.`;
+            return;
+        }
+
+        if (tiemposBase[metodo] === null) {
+            let mensaje = "⚠️ Este método no requiere control de tiempo de infusión manual.";
+            if (metodo === "Moka") mensaje += " La moka opera por presión y calor.";
+            if (metodo === "Espresso") mensaje += " El espresso tiene un tiempo fijo de extracción.";
+            document.getElementById("resultado-tiempo").innerHTML = mensaje;
+            return;
+        }
+
+        let base = tiemposBase[metodo][tueste];
+        if (preferencia === "rapido") base -= 30;
+        if (preferencia === "lento") base += 30;
+        if (base < 30) base = 30;
+
+        const minutos = Math.floor(base / 60);
+        const segundos = base % 60;
+        const tiempoFormateado = `${minutos}:${segundos.toString().padStart(2, '0')} minutos`;
+
+        document.getElementById("resultado-tiempo").innerHTML = `⏱️ Tiempo sugerido de infusión para <strong>${metodo}</strong> con tueste <strong>${tueste}</strong>: <strong>${tiempoFormateado}</strong>`;
+    }
+
+    function mostrarResumen() {
+        const metodo = getSelectedMethod();
+        const fuerza = getSelectedStrength();
+        const agua = document.getElementById("agua_input").value;
+        const ratio = getRatio(metodo, fuerza);
+        const cafe = (agua / ratio).toFixed(1);
+        const tueste = getTueste();
+        const temp = document.getElementById("temp_agua").textContent;
+
+        let tiempoTexto = document.getElementById("resultado-tiempo").innerText;
+        if (tiempoTexto.includes("⏱️")) tiempoTexto = tiempoTexto.split(": ").pop();
+        else if (tiempoTexto.includes("⚠️")) tiempoTexto = "No aplica";
+        else tiempoTexto = "No seleccionado";
+
+        const resumenBody = document.getElementById("resumenBody");
+        resumenBody.innerHTML = `
+            <tr>
+                <td>${metodo}</td>
+                <td>${agua}</td>
+                <td>${fuerza}</td>
+                <td>1:${ratio}</td>
+                <td>${cafe}</td>
+                <td>${tueste}</td>
+                <td>${temp}</td>
+                <td>${tiempoTexto}</td>
+            </tr>
+        `;
+
+        document.getElementById("tablaResumen").style.display = "table";
+    }
+
+    document.getElementById('metodo').addEventListener('change', () => {
+        actualizarResultado(document.getElementById('agua').value);
+    });
+
+    window.onload = () => actualizarResultado(250);
+</script>
+</body>
+</html>
