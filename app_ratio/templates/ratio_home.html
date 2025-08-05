@@ -177,10 +177,10 @@
              Cantidad de agua:
             </label>
 
-            <input type="range" class="form-range" min="50" max="1000" step="1" id="agua" value="250" oninput="actualizarDesdeSlider()">
+            <input type="range" class="form-range" min="1" max="1000" step="1" id="agua" value="250" oninput="actualizarDesdeSlider()">
             <div class="input-group mt-4">
                 <span class="input-group-text">💧 ml / gr de agua</span>
-                <input type="number" class="form-control" id="agua_input" min="50" max="1000" value="250" step="1" onchange="actualizarDesdeInput()">
+                <input type="number" class="form-control" id="agua_input" min="1" max="1000" value="250" step="1" onchange="actualizarDesdeInput()">
             </div>
         </div>
 
@@ -344,7 +344,7 @@
         if (!isNaN(agua) && ratio > 0) {
             const cafe = agua / ratio;
             cafeResultado.value = cafe.toFixed(2) + " g";
-            ratioInfo.innerText = `Ratio utilizado: 1:${ratio}`;
+            ratioInfo.innerText = `Ratio utilizado: 1:${ratio}, agua: ${agua}ml`;
         } else {
             cafeResultado.value = "";
             ratioInfo.innerText = "";
@@ -386,7 +386,7 @@
 
     function actualizarDesdeInput() {
         let agua = parseInt(document.getElementById('agua_input').value);
-        agua = Math.max(50, Math.min(1000, agua));
+        agua = Math.max(1, Math.min(1000, agua));
         document.getElementById('agua').value = agua;
         actualizarResultado(agua);
     }
