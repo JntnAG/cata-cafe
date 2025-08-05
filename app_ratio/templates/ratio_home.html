@@ -104,8 +104,18 @@
         border: none;
         }
 
-        .btn-verde:hover {
-        background-color: #3a6e45;
+                .footer a:hover {
+        color: #ffd700;
+        }
+
+        .btn-cafe {
+        background-color: #b77f08;
+        color: white;
+        border: none;
+        }
+
+        .btn-cafe:hover {
+        background-color: #403c2f;
         }
         @media (max-width: 576px) {
             .slider-marks span,
@@ -177,20 +187,32 @@
         <!-- Paso 2: Fuerza -->
         <div class="mb-4">
             <label for="fuerza" class="form-label slider-label">Selecciona la fuerza del café:</label>
-            <select id="fuerza" class="form-select" onchange="actualizarResultadoDesdeFuerza()">
+            <select id="fuerza" class="form-select" onchange="toggleManualRatio()">
                 <option value="suave">☁️ Suave</option>
                 <option value="promedio" selected>🌤️ Promedio</option>
                 <option value="fuerte">🔥 Fuerte</option>
                 <option value="robusto">💣 Robusto</option>
+                <option value="manual">✍️Ratio manual </option>
             </select>
         </div>
 
+        <!-- Campo Ratio manual -->
+        <div id="manual_ratio_container" class="mb-4" style="display: none;">
+            <label for="ratio_manual" class="form-label">Ingresa el valor del ratio:</label>
+            <div class="input-group">
+                <span class="input-group-text">1:</span>
+                <input type="number" id="ratio_manual" class="form-control" value="16" min="1" max="50" step="1" oninput="actualizarResultadoDesdeFuerza()"/>
+            </div>
+        </div>
+
+        
         <!-- Resultado -->
         <div class="mb-4">
             <label for="cafe_resultado" class="form-label slider-label"> Cantidad de café necesaria:</label>
             <input type="text" class="form-control" id="cafe_resultado" readonly>
             <small class="text-muted" id="ratio_info"></small>
         </div>
+        
 
         <!-- Tueste -->
         <div class="mb-4">
@@ -279,7 +301,56 @@
             <div>&copy; 2025 Cata de Café · Todos los derechos reservados · <strong>Nebulityka</strong> : Servicios en la nube, inteligencia artificial y analítica</div>
       </div>
     </footer>
-<script>
+
+
+    <script>
+    function toggleManualRatio() {
+        const fuerza = document.getElementById("fuerza").value;
+        const manualContainer = document.getElementById("manual_ratio_container");
+        
+        if (fuerza === "manual") {
+            manualContainer.style.display = "block";
+        } else {
+            manualContainer.style.display = "none";
+        }
+        actualizarResultadoDesdeFuerza();
+    }
+
+    function actualizarResultadoDesdeFuerza() {
+        const fuerza = document.getElementById("fuerza").value;
+        const agua = parseFloat(document.getElementById("agua").value);
+        const cafeResultado = document.getElementById("cafe_resultado");
+        const ratioInfo = document.getElementById("ratio_info");
+        
+        let ratio;
+        
+        if (fuerza === "manual") {
+            ratio = parseFloat(document.getElementById("ratio_manual").value);
+            if (isNaN(ratio)) {
+                cafeResultado.value = "";
+                ratioInfo.innerText = "Por favor ingresa un valor numérico válido";
+                return;
+            }
+        } else {
+            switch (fuerza) {
+                case "suave": ratio = 18; break;
+                case "promedio": ratio = 16; break;
+                case "fuerte": ratio = 14; break;
+                case "robusto": ratio = 12; break;
+                default: ratio = 16;
+            }
+        }
+        
+        if (!isNaN(agua) && ratio > 0) {
+            const cafe = agua / ratio;
+            cafeResultado.value = cafe.toFixed(2) + " g";
+            ratioInfo.innerText = `Ratio utilizado: 1:${ratio}`;
+        } else {
+            cafeResultado.value = "";
+            ratioInfo.innerText = "";
+        }
+    }
+
     const ratios = {
         V60: { suave: 18, promedio: 16, fuerte: 15, robusto: 13 },
         Chemex: { suave: 18, promedio: 16, fuerte: 15, robusto: 13 },
@@ -303,17 +374,8 @@
         "Espresso": null
     };
 
-    function getSelectedMethod() { return document.getElementById('metodo').value; }
-    function getSelectedStrength() { return document.getElementById('fuerza').value; }
-    function getRatio(method, strength) { return ratios[method]?.[strength] || 16; }
-
     function actualizarResultado(agua) {
-        const metodo = getSelectedMethod();
-        const fuerza = getSelectedStrength();
-        const ratio = getRatio(metodo, fuerza);
-        const cafe = (agua / ratio).toFixed(1);
-        document.getElementById('cafe_resultado').value = `${cafe} g`;
-        document.getElementById('ratio_info').innerText = `Ratio 1:${ratio} para ${metodo} (${fuerza})`;
+        actualizarResultadoDesdeFuerza();
     }
 
     function actualizarDesdeSlider() {
@@ -326,11 +388,6 @@
         let agua = parseInt(document.getElementById('agua_input').value);
         agua = Math.max(50, Math.min(1000, agua));
         document.getElementById('agua').value = agua;
-        actualizarResultado(agua);
-    }
-
-    function actualizarResultadoDesdeFuerza() {
-        const agua = document.getElementById('agua').value;
         actualizarResultado(agua);
     }
 
@@ -350,11 +407,11 @@
     }
 
     function sugerirTiempo(preferencia) {
-        const metodo = getSelectedMethod();
+        const metodo = document.getElementById('metodo').value;
         const tueste = getTueste();
 
         if (!tiemposBase[metodo]) {
-            document.getElementById("resultado-tiempo").innerHTML = `❌ No hay datos de tiempo para el método seleccionado.`;
+            document.getElementById("resultado-tiempo").innerHTML = `❌ No es necesario tiempos para el método seleccionado.`;
             return;
         }
 
@@ -379,10 +436,17 @@
     }
 
     function mostrarResumen() {
-        const metodo = getSelectedMethod();
-        const fuerza = getSelectedStrength();
+        const metodo = document.getElementById('metodo').value;
+        const fuerza = document.getElementById('fuerza').value;
         const agua = document.getElementById("agua_input").value;
-        const ratio = getRatio(metodo, fuerza);
+        let ratio;
+        
+        if (fuerza === "manual") {
+            ratio = parseFloat(document.getElementById("ratio_manual").value);
+        } else {
+            ratio = ratios[metodo]?.[fuerza] || 16;
+        }
+        
         const cafe = (agua / ratio).toFixed(1);
         const tueste = getTueste();
         const temp = document.getElementById("temp_agua").textContent;
@@ -413,7 +477,12 @@
         actualizarResultado(document.getElementById('agua').value);
     });
 
-    window.onload = () => actualizarResultado(250);
+    // Inicialización
+    window.onload = function() {
+        document.getElementById("manual_ratio_container").style.display = "none";
+        actualizarResultado(250);
+    };
 </script>
+
 </body>
 </html>
